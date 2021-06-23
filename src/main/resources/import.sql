@@ -1,0 +1,1 @@
+insert into usuario(nome, senha) values('admin', '$2a$10$TFXwZRJnR5r2Y1nO3KC27OdMsMO0rmmS6wSsKMY36xb49CxKz0ULq');
