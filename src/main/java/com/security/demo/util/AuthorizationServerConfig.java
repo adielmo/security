@@ -27,19 +27,20 @@ clients.inMemory()
        .withClient("react")
        .secret("{noop}arthur")
        .scopes("read", "write")
-       .authorizedGrantTypes("password")
-       .accessTokenValiditySeconds(1800);//1800 / 60 = 30 Segundos 
-	
+       .authorizedGrantTypes("refresh_token","password")
+       .accessTokenValiditySeconds(20)//1800 / 60 = 30 Segundos 
+	   .refreshTokenValiditySeconds(3600 * 24);// 60 * 60 = 3600
 	}
 
 	@Override
 	public void configure(AuthorizationServerEndpointsConfigurer endpoints) throws Exception {
 		endpoints.tokenStore(tokenStore())
 		         .accessTokenConverter(accessTokenConverter())
-		         .authenticationManager(authenticationManager);
+		         .reuseRefreshTokens(false)//Reutilização do refresh_token
+		         .authenticationManager(authenticationManager);//autenticar um token 
 	}
 
-	@Bean
+	@Bean //Gerando Token JWT
 	public JwtAccessTokenConverter accessTokenConverter() {
      JwtAccessTokenConverter accessTokenConverter = new JwtAccessTokenConverter();
      accessTokenConverter.setSigningKey("security");
