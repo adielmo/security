@@ -1,4 +1,4 @@
-package com.security.demo.util;
+package com.security.demo.security;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

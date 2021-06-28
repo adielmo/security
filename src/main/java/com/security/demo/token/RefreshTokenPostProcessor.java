@@ -20,9 +20,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseBodyAdvice;
 public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2AccessToken> {
 
 	/**
-	 * 
-	 * Class q capturar um Response do tipo OAuth2AccessToken, atrávez da
-	 * anotação @ControllerAdvice, para pegar refreshToken "body" enviar para o Cookie
+	 * Class captura um type OAuth2AccessToken, qdo 
+	 * retorna um AccessToken e RefreshToken
+	 * Class q capturar um Response do type OAuth2AccessToken, atrávez da
+	 * anotação @ControllerAdvice, para pegar refreshToken "body"
+	 *  enviar para o Cookie, deixando o body RefreshToken null
 	 */
 
 	@Override
@@ -34,7 +36,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 	public OAuth2AccessToken beforeBodyWrite(OAuth2AccessToken body, MethodParameter returnType,
 			MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
 			ServerHttpRequest request, ServerHttpResponse response) {
-
+System.out.println("OAuth2AccessToken");
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
 		HttpServletRequest req = ((ServletServerHttpRequest) request).getServletRequest();
 		HttpServletResponse res = ((ServletServerHttpResponse) response).getServletResponse();

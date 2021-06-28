@@ -1,4 +1,4 @@
-package com.security.demo.util;
+package com.security.demo.security;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

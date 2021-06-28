@@ -7,6 +7,7 @@ import javax.websocket.server.PathParam;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -17,7 +18,6 @@ import org.springframework.web.bind.annotation.RestController;
 import com.security.demo.dto.UsuarioDtoValido;
 import com.security.demo.entity.Usuario;
 import com.security.demo.service.UsuarioService;
-
 @RestController
 @RequestMapping("/usuarios")
 public class UsuarioController {
@@ -25,6 +25,7 @@ public class UsuarioController {
 	@Autowired
 	private UsuarioService usuarioService;
 	
+	//@CrossOrigin(origins = "http://localhost:8000")
 	@GetMapping
 	public List<Usuario> buscarTodosUsuarios(){
 		return usuarioService.todosUsuarios();
