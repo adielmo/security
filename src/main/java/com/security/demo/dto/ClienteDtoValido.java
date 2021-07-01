@@ -1,15 +1,15 @@
 package com.security.demo.dto;
 
-public class UsuarioDtoValido {
+public class ClienteDtoValido {
 
 	private String nome;
 	private boolean acesso;
 
-	public UsuarioDtoValido() {
+	public ClienteDtoValido() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UsuarioDtoValido(String nome, boolean acesso) {
+	public ClienteDtoValido(String nome, boolean acesso) {
 
 		this.nome = nome;
 		this.acesso = acesso;

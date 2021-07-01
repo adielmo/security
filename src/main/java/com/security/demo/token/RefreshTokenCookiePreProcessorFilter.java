@@ -39,8 +39,8 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
 		if ("/oauth/token".equalsIgnoreCase(req.getRequestURI())
 				&& "refresh_token".equalsIgnoreCase(req.getParameter("grant_type"))
 				&& req.getCookies() != null) {
-			String refreshToken = 
-			 // Optional<Cookie>  refreshToken= 
+			/* Pegando o refreshToken q está no cookie, e colocar na Request */
+			String refreshToken = 	 
 					Stream.of(req.getCookies())
 			            .filter(cookie -> "refreshToken".equals(cookie.getName()))
 			            .findFirst()
@@ -48,6 +48,7 @@ public class RefreshTokenCookiePreProcessorFilter implements Filter {
 			            .orElse(null);
 			req = new MyServletRequestWrapper(req, refreshToken);
 /*
+ *  Optional<Cookie>  refreshToken= 
 	for (Cookie cookie : req.getCookies()) {
 		if (cookie.getName().equals("refreshToken")) {
 

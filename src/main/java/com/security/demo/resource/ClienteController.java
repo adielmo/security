@@ -15,29 +15,29 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.security.demo.dto.UsuarioDtoValido;
-import com.security.demo.entity.Usuario;
-import com.security.demo.service.UsuarioService;
+import com.security.demo.dto.ClienteDtoValido;
+import com.security.demo.entity.Cliente;
+import com.security.demo.service.ClienteService;
 @RestController
 @RequestMapping("/usuarios")
-public class UsuarioController {
+public class ClienteController {
 	
 	@Autowired
-	private UsuarioService usuarioService;
+	private ClienteService usuarioService;
 	
 	//@CrossOrigin(origins = "http://localhost:8000")
 	@GetMapping
-	public List<Usuario> buscarTodosUsuarios(){
+	public List<Cliente> buscarTodosUsuarios(){
 		return usuarioService.todosUsuarios();
 		//return new ResponseEntity<List<Usuario>>(usuario, HttpStatus.OK);
 	//return (!usuario.isEmpty())? ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();	
 	}
 	
 	@PostMapping
-	public ResponseEntity<Usuario> salvarUsuario(@RequestBody Usuario usuario){
+	public ResponseEntity<Cliente> salvarUsuario(@RequestBody Cliente usuario){
 		
 		try{
-		Usuario usuarioSalve = usuarioService.salveUsuario(usuario);
+		Cliente usuarioSalve = usuarioService.salveUsuario(usuario);
 		
 		return ResponseEntity.ok().body(usuarioSalve);
 				                    
@@ -47,9 +47,9 @@ public class UsuarioController {
 		
 	}
 	@GetMapping("/{id}")
-	public ResponseEntity<Usuario> validarUser(@PathVariable Long id){
+	public ResponseEntity<Cliente> validarUser(@PathVariable Long id){
 		
-			Usuario usuario =  usuarioService.getUsuario(id);
+			Cliente usuario =  usuarioService.getUsuario(id);
 
 			
 			return usuario != null ? ResponseEntity.ok().body(usuario)
@@ -58,9 +58,9 @@ public class UsuarioController {
 			
 	}	
 	@GetMapping("/validar")
-	public ResponseEntity<UsuarioDtoValido> validarUser(@PathParam(value = "nome") String nome, @PathParam(value = "senha") String senha){
+	public ResponseEntity<ClienteDtoValido> validarUser(@PathParam(value = "nome") String nome, @PathParam(value = "senha") String senha){
 		try{
-			UsuarioDtoValido usuarioValido =  usuarioService.validarUsuarioBd(nome, senha);
+			ClienteDtoValido usuarioValido =  usuarioService.validarUsuarioBd(nome, senha);
 
 			
 			return ResponseEntity.ok().body(usuarioValido);

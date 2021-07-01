@@ -22,7 +22,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 	/**
 	 * Class captura um type OAuth2AccessToken, qdo 
 	 * retorna um AccessToken e RefreshToken
-	 * Class q capturar um Response do type OAuth2AccessToken, atrávez da
+	 * Class q capturar um Response do type OAuth2AccessToken, com
 	 * anotação @ControllerAdvice, para pegar refreshToken "body"
 	 *  enviar para o Cookie, deixando o body RefreshToken null
 	 */
@@ -36,7 +36,8 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 	public OAuth2AccessToken beforeBodyWrite(OAuth2AccessToken body, MethodParameter returnType,
 			MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
 			ServerHttpRequest request, ServerHttpResponse response) {
-System.out.println("OAuth2AccessToken");
+		
+    System.out.println("OAuth2AccessToken");
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
 		HttpServletRequest req = ((ServletServerHttpRequest) request).getServletRequest();
 		HttpServletResponse res = ((ServletServerHttpResponse) response).getServletResponse();
@@ -55,10 +56,10 @@ System.out.println("OAuth2AccessToken");
 
 	private void adicionarRefreshTokenNoCookie(HttpServletRequest req, HttpServletResponse res, String refreshToken) {
 		Cookie refreshTokenCookie = new Cookie("refreshToken", refreshToken); /* Nome do Cookie é refreshToken */
-		refreshTokenCookie.setHttpOnly(true); /* Acessivel somente em HTTP */
+		refreshTokenCookie.setHttpOnly(true); /* Acessivel somente em HTTP, envia p/Coockie */
 		refreshTokenCookie.setSecure(false);// TODO: Mudar para True em produção
 		refreshTokenCookie.setPath(req.getContextPath() + "/oauth/token");
-		refreshTokenCookie.setMaxAge(2592000);
+		refreshTokenCookie.setMaxAge(2592000);//30 Dias
 
 		res.addCookie(refreshTokenCookie);
 	}
