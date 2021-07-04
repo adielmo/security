@@ -1,5 +1,7 @@
 package com.security.demo.entity;
 
+import java.util.function.Function;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -7,24 +9,25 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "cliente")
-public class Cliente {
-
+@Table(name = "produto")
+public class Produto {
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private String senha;
-
-	public Cliente() {
+	private Double preco;
+	private Integer quantidade;
+	
+	public Produto() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Long id, String nome, String senha) {
-
+	public Produto(Long id, String nome, Double preco, Integer quantidade) {
 		this.id = id;
 		this.nome = nome;
-		this.senha = senha;
+		this.preco = preco;
+		this.quantidade = quantidade;
 	}
 
 	public Long getId() {
@@ -43,12 +46,24 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getSenha() {
-		return senha;
+	public Double getPreco() {
+		return preco;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setPreco(Double preco) {
+		this.preco = preco;
+	}
+
+	public Integer getQuantidade() {
+		return quantidade;
+	}
+
+	public void setQuantidade(Integer quantidade) {
+		this.quantidade = quantidade;
+	}
+	
+	public <T> T map(Function<Produto, T>function) {
+		return function.apply(this);
 	}
 
 	@Override
@@ -67,7 +82,7 @@ public class Cliente {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Cliente other = (Cliente) obj;
+		Produto other = (Produto) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -75,11 +90,9 @@ public class Cliente {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", senha=" + senha + "]";
-	}
+	
+	
+	
 	
 	
 

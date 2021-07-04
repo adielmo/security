@@ -15,29 +15,42 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.DeserializationFeature;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.security.demo.dto.ClienteDtoValido;
 import com.security.demo.entity.Cliente;
 import com.security.demo.service.ClienteService;
 @RestController
-@RequestMapping("/usuarios")
+@RequestMapping("/clientes")
 public class ClienteController {
 	
 	@Autowired
-	private ClienteService usuarioService;
+	private ClienteService clienteService;
 	
 	//@CrossOrigin(origins = "http://localhost:8000")
 	@GetMapping
-	public List<Cliente> buscarTodosUsuarios(){
-		return usuarioService.todosUsuarios();
+	public List<Cliente> buscarTodosUsuarios() throws JsonMappingException, JsonProcessingException{
+		List<Cliente> cliente = clienteService.todosUsuarios();
+		
+		Cliente c1 = cliente.stream().findFirst().orElse(null);
+		ObjectMapper mapper = new ObjectMapper();
+		mapper.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, true);
+		Cliente cc = mapper.convertValue(c1, Cliente.class);
+		
+		System.out.println(cc.toString());
+	
 		//return new ResponseEntity<List<Usuario>>(usuario, HttpStatus.OK);
-	//return (!usuario.isEmpty())? ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();	
+	//return (!usuario.isEmpty())? ResponseEntity.ok().body(usuario) : ResponseEntity.notFound().build();
+		return cliente;
 	}
 	
 	@PostMapping
-	public ResponseEntity<Cliente> salvarUsuario(@RequestBody Cliente usuario){
+	public ResponseEntity<Cliente> salvarCliente(@RequestBody Cliente cliente){
 		
 		try{
-		Cliente usuarioSalve = usuarioService.salveUsuario(usuario);
+		Cliente usuarioSalve = clienteService.salveCliente(cliente);
 		
 		return ResponseEntity.ok().body(usuarioSalve);
 				                    
@@ -49,7 +62,7 @@ public class ClienteController {
 	@GetMapping("/{id}")
 	public ResponseEntity<Cliente> validarUser(@PathVariable Long id){
 		
-			Cliente usuario =  usuarioService.getUsuario(id);
+			Cliente usuario =  clienteService.getUsuario(id);
 
 			
 			return usuario != null ? ResponseEntity.ok().body(usuario)
@@ -60,7 +73,7 @@ public class ClienteController {
 	@GetMapping("/validar")
 	public ResponseEntity<ClienteDtoValido> validarUser(@PathParam(value = "nome") String nome, @PathParam(value = "senha") String senha){
 		try{
-			ClienteDtoValido usuarioValido =  usuarioService.validarUsuarioBd(nome, senha);
+			ClienteDtoValido usuarioValido =  clienteService.validarUsuarioBd(nome, senha);
 
 			
 			return ResponseEntity.ok().body(usuarioValido);

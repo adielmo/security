@@ -5,6 +5,9 @@ import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
@@ -14,7 +17,9 @@ import javax.persistence.Table;
 @Table(name = "usuario")
 public class Usuario {
 	
-	private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long codigo;
 	private String nome;
 	private String email;
 	private String senha;
@@ -22,26 +27,26 @@ public class Usuario {
 	@ManyToMany(fetch = FetchType.EAGER)//Toda vez q buscar Usuário, trás suas Permissões
 	@JoinTable(name = "usuario_permissao", joinColumns = @JoinColumn(name="codigo_usuario")
 	           , inverseJoinColumns = @JoinColumn(name="codigo_permissao"))
-	List<Permisao> permisoes = new ArrayList<>();
+	List<Permissao> permisoes = new ArrayList<>();
 	
 	public Usuario() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Usuario(Long id, String nome, String email, String senha, List<Permisao> permisoes) {
-		this.id = id;
+	public Usuario(Long codigo, String nome, String email, String senha, List<Permissao> permisoes) {
+		this.codigo = codigo;
 		this.nome = nome;
 		this.email = email;
 		this.senha = senha;
 		this.permisoes = permisoes;
 	}
 
-	public Long getId() {
-		return id;
+	public Long getCodigo() {
+		return this.codigo;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setCodigo(Long codigo) {
+		this.codigo = codigo;
 	}
 
 	public String getNome() {
@@ -68,11 +73,11 @@ public class Usuario {
 		this.senha = senha;
 	}
 
-	public List<Permisao> getPermisoes() {
+	public List<Permissao> getPermisoes() {
 		return permisoes;
 	}
 
-	public void setPermisoes(List<Permisao> permisoes) {
+	public void setPermisoes(List<Permissao> permisoes) {
 		this.permisoes = permisoes;
 	}
 
@@ -80,7 +85,7 @@ public class Usuario {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-		result = prime * result + ((id == null) ? 0 : id.hashCode());
+		result = prime * result + ((codigo == null) ? 0 : codigo.hashCode());
 		return result;
 	}
 
@@ -93,10 +98,10 @@ public class Usuario {
 		if (getClass() != obj.getClass())
 			return false;
 		Usuario other = (Usuario) obj;
-		if (id == null) {
-			if (other.id != null)
+		if (codigo == null) {
+			if (other.codigo != null)
 				return false;
-		} else if (!id.equals(other.id))
+		} else if (!codigo.equals(other.codigo))
 			return false;
 		return true;
 	}

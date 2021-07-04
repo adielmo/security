@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.oauth2.config.annotation.configurers.ClientDetailsServiceConfigurer;
 import org.springframework.security.oauth2.config.annotation.web.configuration.AuthorizationServerConfigurerAdapter;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableAuthorizationServer;
@@ -26,11 +27,15 @@ public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdap
 	@Autowired
 	private AuthenticationManager authenticationManager;
 	
+	@Autowired
+	private UserDetailsService userDetailsService;
+	
 	@Override
 	public void configure(ClientDetailsServiceConfigurer clients) throws Exception {
+		/* Setando o Client q vai consumir a Api em memória */
 clients.inMemory()
        .withClient("react")
-       .secret("{noop}arthur")
+          .secret("{noop}$2a$10$Tj6Pts4SIcVuoEHw/MDnPeOPXc8xBLei9zIKHS8J8SqYA5fE/Bdei")//Arthur
        .scopes("read", "write")
        .authorizedGrantTypes("refresh_token","password")
        .accessTokenValiditySeconds(20)//1800 / 60 = 30 Segundos 
@@ -42,7 +47,8 @@ clients.inMemory()
 		endpoints.tokenStore(tokenStore())
 		         .accessTokenConverter(accessTokenConverter())
 		         .reuseRefreshTokens(false)//Reutilização do refresh_token
-		         .authenticationManager(authenticationManager);//autenticar um token 
+		         .userDetailsService(this.userDetailsService)
+		         .authenticationManager(this.authenticationManager);//autenticar um token 
 	}
 
 	@Bean //Gerando Token JWT

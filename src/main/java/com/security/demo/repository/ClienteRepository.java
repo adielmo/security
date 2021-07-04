@@ -13,7 +13,7 @@ import com.security.demo.entity.Cliente;
 public interface ClienteRepository extends JpaRepository<Cliente, Long>{
 
 //Optional<Usuario> findByNomeContaining(String nome);
-	@Query("from Usuario where nome= :nome")
+	@Query("from Cliente where nome= :nome")
 	Optional<Cliente> buscarPorNome(@Param("nome") String nome);
 	
 	Optional<Cliente> findByNomeEquals( String nome);

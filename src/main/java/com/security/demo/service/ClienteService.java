@@ -18,32 +18,32 @@ import com.security.demo.securityException.EntidadeNaoEncotradaException;
 public class ClienteService {
 
 	@Autowired
-	private ClienteRepository usuarioRepository;
+	private ClienteRepository clienteRepository;
 	@Autowired
 	private BCryptPasswordEncoder encoder;
 
 	public List<Cliente> todosUsuarios() {
 
-		return usuarioRepository.findAll();
+		return clienteRepository.findAll();
 	}
 
 	@Transactional
-	public Cliente salveUsuario(Cliente usuario) {
-		String nome = usuario.getNome().trim();
-		Cliente newUsuario = getUsuarioLogin(nome);
+	public Cliente salveCliente(Cliente cliente) {
+		String nome = cliente.getNome().trim();
+		Cliente newUsuario = getClienteLogin(nome);
 
 		if (newUsuario != null) {
 			throw new EntidadeNaoEncotradaException(String.format("%s já cadastro como usuário!", nome));
 		}
 
-		usuario.setSenha(encoder.encode(usuario.getSenha()));
+		cliente.setSenha(encoder.encode(cliente.getSenha()));
 
-		return usuarioRepository.save(usuario);
+		return clienteRepository.save(cliente);
 
 	}
 
 	public ClienteDtoValido validarUsuarioBd(String nome, String senha) {
-		Cliente usuario = usuarioRepository.findByNomeEquals(nome).orElse(null);
+		Cliente usuario = clienteRepository.findByNomeEquals(nome).orElse(null);
 
 		if (usuario == null) {
 			throw new RuntimeException(String.format("Nome do usuario incorreto!"));
@@ -62,10 +62,10 @@ public class ClienteService {
 	}
 
 	public Cliente getUsuario(Long id) {
-		return usuarioRepository.findById(id).orElse(null);
+		return clienteRepository.findById(id).orElse(null);
 	}
 
-	public Cliente getUsuarioLogin(String nome) {
-		return usuarioRepository.buscarPorNome(nome).orElse(null);
+	public Cliente getClienteLogin(String nome) {
+		return clienteRepository.buscarPorNome(nome).orElse(null);
 	}
 }
