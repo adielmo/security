@@ -1,4 +1,4 @@
-package com.security.demo.apiSecurityHandler;
+package com.security.demo.securityException;
 
 public class EntidadeVaziaException extends RuntimeException {
 

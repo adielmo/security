@@ -7,6 +7,19 @@ public class ProdutoResponse {
 	private Double preco;
 	private Integer quantidade;
 	
+	public ProdutoResponse() {
+		// TODO Auto-generated constructor stub
+	}
+	
+	
+	public ProdutoResponse(Long id, String nome, Double preco, Integer quantidade) {
+		this.id = id;
+		this.nome = nome;
+		this.preco = preco;
+		this.quantidade = quantidade;
+	}
+
+
 	public Long getId() {
 		return id;
 	}

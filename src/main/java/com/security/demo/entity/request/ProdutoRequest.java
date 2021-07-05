@@ -1,10 +1,20 @@
 package com.security.demo.entity.request;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.PositiveOrZero;
+
 public class ProdutoRequest {
 	
-	
+	@NotBlank
 	private String nome;
+	
+	@PositiveOrZero
+	@NotNull
 	private Double preco;
+	
+	@PositiveOrZero
+	@NotNull
 	private Integer quantidade;
 	
 	public String getNome() {

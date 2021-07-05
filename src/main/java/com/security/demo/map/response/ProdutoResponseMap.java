@@ -2,10 +2,10 @@ package com.security.demo.map.response;
 
 import org.springframework.stereotype.Component;
 
-import com.security.demo.apiSecurityHandler.EntidadeVaziaException;
 import com.security.demo.entity.Produto;
 import com.security.demo.entity.response.ProdutoResponse;
 import com.security.demo.map.Map;
+import com.security.demo.securityException.EntidadeVaziaException;
 
 @Component
 public class ProdutoResponseMap implements Map<Produto, ProdutoResponse> {
