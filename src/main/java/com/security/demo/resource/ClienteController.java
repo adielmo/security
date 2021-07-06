@@ -48,7 +48,7 @@ public class ClienteController {
 		return ResponseEntity.ok(clienteService.getClientePage(clientePageable));
 	}
 
-                             	// ROLE do usuário and Scope do Cliente = true
+                             	       // ROLE == usuário and Scope == Cliente = true
 	@PreAuthorize("hasAuthority('ROLE_CADASTRAR_CLIENTE') and #oauth2.hasScope('write')")
 	@PostMapping
 	public ResponseEntity<ClienteResponse> saveProduto(@RequestBody ClienteRequest clienteRequest){

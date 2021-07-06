@@ -15,6 +15,7 @@ import org.springframework.stereotype.Service;
 
 import com.security.demo.entity.Usuario;
 import com.security.demo.repository.UsuarioRepository;
+import com.security.demo.util.UsuarioSistema;
 
 @Service
 public class AppUserDetailsService implements UserDetailsService{
@@ -25,7 +26,7 @@ public class AppUserDetailsService implements UserDetailsService{
 	public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
 Usuario usuario = usuarioRepository.findByEmail(email)
                    .orElseThrow(() -> new UsernameNotFoundException("Úsuario ou Senha incorreta!"));
-		return new User(email, usuario.getSenha(), getPermissoes(usuario));
+		return new UsuarioSistema(usuario, getPermissoes(usuario));
 	}
 
 	private Collection<? extends GrantedAuthority> getPermissoes(Usuario usuario) {

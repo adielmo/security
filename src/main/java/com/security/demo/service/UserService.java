@@ -7,6 +7,7 @@ import javax.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import com.security.demo.dto.UserDtoValido;
@@ -19,8 +20,9 @@ public class UserService {
 
 	@Autowired
 	private UserRepository userRepository;
-	@Autowired
-	private BCryptPasswordEncoder encoder;
+	/*
+	 * @Autowired private BCryptPasswordEncoder encoder;
+	 */
 
 	public List<User> todosUser() {
 
@@ -36,7 +38,7 @@ public class UserService {
 			throw new EntidadeNaoEncotradaException(String.format("%s já cadastro como usuário!", nome));
 		}
 
-		user.setSenha(encoder.encode(user.getSenha()));
+		//user.setSenha(encoder.encode(user.getSenha()));
 
 		return userRepository.save(user);
 
@@ -58,7 +60,7 @@ public class UserService {
 	}
 
 	private boolean validarSenhaEncoder(String senha, String password) {
-		return encoder.matches(senha, password);
+		return true;//encoder.matches(senha, password);
 	}
 	public User getUser(Long id) {
 		return userRepository.findById(id).orElseThrow(() ->
@@ -67,4 +69,9 @@ public class UserService {
 	public User getUserLogin(String nome) {
 		return userRepository.buscarPorNome(nome).orElse(null);
 	}
+	
+	/*
+	 * @Bean public PasswordEncoder passwordEncoderResource() { return new
+	 * BCryptPasswordEncoder(); }
+	 */
 }
