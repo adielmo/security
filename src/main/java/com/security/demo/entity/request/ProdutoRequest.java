@@ -6,15 +6,15 @@ import javax.validation.constraints.PositiveOrZero;
 
 public class ProdutoRequest {
 	
-	@NotBlank
+	//@NotBlank
 	private String nome;
 	
-	@PositiveOrZero
-	@NotNull
+	//@PositiveOrZero
+	//@NotNull
 	private Double preco;
 	
-	@PositiveOrZero
-	@NotNull
+	//@PositiveOrZero
+	//@NotNull
 	private Integer quantidade;
 	
 	public String getNome() {

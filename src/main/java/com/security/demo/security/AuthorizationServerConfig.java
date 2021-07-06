@@ -36,8 +36,15 @@ clients.inMemory()
           .secret("{noop}$2a$10$Tj6Pts4SIcVuoEHw/MDnPeOPXc8xBLei9zIKHS8J8SqYA5fE/Bdei")//Arthur
        .scopes("read", "write")
        .authorizedGrantTypes("refresh_token","password")
-       .accessTokenValiditySeconds(20)//1800 / 60 = 30 Segundos 
-	   .refreshTokenValiditySeconds(3600 * 24);// 60 * 60 = 3600
+       .accessTokenValiditySeconds(1800)//1800 / 60 = 30 Segundos 
+	   .refreshTokenValiditySeconds(3600 * 24)// 60 * 60 = 3600
+.and()
+		.withClient("angular")
+		.secret("{noop}$2a$10$Tj6Pts4SIcVuoEHw/MDnPeOPXc8xBLei9zIKHS8J8SqYA5fE/Bdei")//Arthur
+		.scopes("read")
+		.authorizedGrantTypes("refresh_token","password")
+		.accessTokenValiditySeconds(1800)//1800 / 60 = 30 Segundos 
+		.refreshTokenValiditySeconds(3600 * 24);// 60 * 60 = 3600
 	}
 
 	@Override

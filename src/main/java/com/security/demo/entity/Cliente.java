@@ -1,10 +1,15 @@
 package com.security.demo.entity;
 
+import java.util.function.Function;
+
+import javax.persistence.Embedded;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+
+import com.security.demo.entity.request.ClienteRequest;
 
 @Entity
 @Table(name = "cliente")
@@ -14,17 +19,28 @@ public class Cliente {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	private String nome;
-	private String senha;
+	private String email;
+	private String cpf;
+	private String telefone;
+	
+	@Embedded
+	private Endereco endereco;
 
 	public Cliente() {
 		// TODO Auto-generated constructor stub
 	}
 
-	public Cliente(Long id, String nome, String senha) {
-
+	public Cliente(Long id, String nome, String email, String cpf, String telefone, Endereco endereco) {
 		this.id = id;
 		this.nome = nome;
-		this.senha = senha;
+		this.email = email;
+		this.cpf = cpf;
+		this.telefone = telefone;
+		this.endereco = endereco;
+	}
+	
+	public <T>T map(Function<Cliente, T> function){
+		return function.apply(this);
 	}
 
 	public Long getId() {
@@ -43,12 +59,36 @@ public class Cliente {
 		this.nome = nome;
 	}
 
-	public String getSenha() {
-		return senha;
+	public String getEmail() {
+		return email;
 	}
 
-	public void setSenha(String senha) {
-		this.senha = senha;
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getCpf() {
+		return cpf;
+	}
+
+	public void setCpf(String cpf) {
+		this.cpf = cpf;
+	}
+
+	public String getTelefone() {
+		return telefone;
+	}
+
+	public void setTelefone(String telefone) {
+		this.telefone = telefone;
+	}
+
+	public Endereco getEndereco() {
+		return endereco;
+	}
+
+	public void setEndereco(Endereco endereco) {
+		this.endereco = endereco;
 	}
 
 	@Override
@@ -75,12 +115,5 @@ public class Cliente {
 			return false;
 		return true;
 	}
-
-	@Override
-	public String toString() {
-		return "Cliente [id=" + id + ", nome=" + nome + ", senha=" + senha + "]";
-	}
-	
-	
 
 }

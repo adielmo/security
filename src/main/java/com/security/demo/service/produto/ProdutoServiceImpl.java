@@ -1,4 +1,4 @@
-package com.security.demo.service;
+package com.security.demo.service.produto;
 
 import java.util.List;
 
@@ -39,7 +39,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	@Override
 	public ProdutoResponse create(ProdutoRequest produtoRequest) {
 		LOGGER.info("Criando um registro de Produto");
-		Assert.notNull(produtoRequest, "Request inválida, null !");
+		Assert.notNull(produtoRequest, "ProdutoRequest inválida, null !");
 
 		Produto produto = produtoMap.converter(produtoRequest);
 		return prodRepository.saveAndFlush(produto)
@@ -79,16 +79,13 @@ public class ProdutoServiceImpl implements ProdutoService {
 	public boolean deleteProduto(Long id) {
     	LOGGER.info("Deletando um registro do tipo Produto");
 		Assert.notNull(id, "ID inválido !");
-  try {
-	  //getProdutoId(id);
+
+	  getProdutoId(id);
 	  prodRepository.deleteById(id);
-	  return true;
-	
-} catch (Exception e) {
-	LOGGER.warn("Erro ao remover o registro {}", id);
-}
-  
-  return false;
+	  return true;	
+
+//	LOGGER.warn("Erro ao remover o registro {}", id);
+
 	}
 
 
@@ -105,7 +102,7 @@ public class ProdutoServiceImpl implements ProdutoService {
     	LOGGER.info("Buscando um registro tipo Produto pelo Nome");
 
 		return prodRepository.buscarProdutNome(nome.strip()).stream().findFirst()
-				.orElseThrow(() -> new EntidadeNaoEncotradaException(String.format("Produto não encontrado, com Id %s !", nome)));
+				.orElseThrow(() -> new EntidadeNaoEncotradaException(String.format("Produto não encontrado, com Nome %s !", nome)));
 	}
 	
 	public Produto getProdutoId(Long id) {
@@ -117,7 +114,7 @@ public class ProdutoServiceImpl implements ProdutoService {
 	   
     public Produto mergeProduto(ProdutoRequest produtoRequest, Produto produto) {
 
-    	if (!"".equals(produtoRequest.getNome())) {
+    	if (produtoRequest.getNome() != null) {
 			produto.setNome(produtoRequest.getNome());
 		}
     	

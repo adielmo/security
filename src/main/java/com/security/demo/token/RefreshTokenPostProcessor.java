@@ -37,7 +37,7 @@ public class RefreshTokenPostProcessor implements ResponseBodyAdvice<OAuth2Acces
 			MediaType selectedContentType, Class<? extends HttpMessageConverter<?>> selectedConverterType,
 			ServerHttpRequest request, ServerHttpResponse response) {
 		
-    System.out.println("OAuth2AccessToken");
+    System.out.println("Resp: OAuth2AccessToken");
 		DefaultOAuth2AccessToken token = (DefaultOAuth2AccessToken) body;
 		HttpServletRequest req = ((ServletServerHttpRequest) request).getServletRequest();
 		HttpServletResponse res = ((ServletServerHttpResponse) response).getServletResponse();

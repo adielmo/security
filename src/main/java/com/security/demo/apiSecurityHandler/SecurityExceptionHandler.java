@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
+import com.security.demo.securityException.CpfJaCadastradoException;
+import com.security.demo.securityException.EmailJaCadastradoEncotradaException;
 import com.security.demo.securityException.EntidadeNaoEncotradaException;
 import com.security.demo.securityException.EntidadeVaziaException;
 
@@ -52,6 +54,34 @@ public class SecurityExceptionHandler extends ResponseEntityExceptionHandler{
 	
 	@ExceptionHandler(EntidadeNaoEncotradaException.class)
 	public ResponseEntity<Problem> handlerEntidadeNaoEncotradaException(EntidadeNaoEncotradaException ex,
+			HttpServletRequest request){
+		HttpStatus  status = HttpStatus.NOT_FOUND;
+
+		Problem problema = new Problem();
+		problema.setStatus(status.value());
+		problema.setData(OffsetDateTime.now());
+		problema.setTitulo(ex.getLocalizedMessage());
+		problema.setPath(request.getRequestURL().toString());
+		
+		return ResponseEntity.status(status).body(problema);
+	}
+	
+	@ExceptionHandler(EmailJaCadastradoEncotradaException.class)
+	public ResponseEntity<Problem> handlerEmailJaCadastradoEncotradaException(EmailJaCadastradoEncotradaException ex,
+			HttpServletRequest request){
+		HttpStatus  status = HttpStatus.NOT_FOUND;
+
+		Problem problema = new Problem();
+		problema.setStatus(status.value());
+		problema.setData(OffsetDateTime.now());
+		problema.setTitulo(ex.getLocalizedMessage());
+		problema.setPath(request.getRequestURL().toString());
+		
+		return ResponseEntity.status(status).body(problema);
+	}
+	
+	@ExceptionHandler(CpfJaCadastradoException.class)
+	public ResponseEntity<Problem> handlerCpfJaCadastradoException(CpfJaCadastradoException ex,
 			HttpServletRequest request){
 		HttpStatus  status = HttpStatus.NOT_FOUND;
 
