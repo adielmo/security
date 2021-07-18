@@ -23,13 +23,9 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import com.security.demo.entity.request.ClienteRequest;
-import com.security.demo.entity.request.ProdutoRequest;
 import com.security.demo.entity.response.ClienteResponse;
-import com.security.demo.entity.response.ProdutoResponse;
 import com.security.demo.service.cliente.ClienteService;
-import com.security.demo.service.produto.ProdutoService;
 import com.security.demo.util.page.ClientePageable;
-import com.security.demo.util.page.ProdutoPageable;
 
 @RestController
 @RequestMapping("/clientes")

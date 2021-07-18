@@ -2,9 +2,6 @@ package com.security.demo.entity.request;
 
 import javax.persistence.Column;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.NotBlank;
-
-import org.hibernate.validator.constraints.br.CPF;
 
 public class ClienteRequest {
 

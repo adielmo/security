@@ -1,7 +1,6 @@
 package com.security.demo.entity;
 
 import javax.persistence.Embeddable;
-import javax.persistence.Embedded;
 
 @Embeddable
 public class Endereco {

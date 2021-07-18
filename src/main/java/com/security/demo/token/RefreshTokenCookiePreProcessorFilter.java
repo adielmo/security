@@ -2,7 +2,6 @@ package com.security.demo.token;
 
 import java.io.IOException;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Stream;
 
 import javax.servlet.Filter;

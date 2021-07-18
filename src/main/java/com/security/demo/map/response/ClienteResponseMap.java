@@ -3,8 +3,6 @@ package com.security.demo.map.response;
 import org.springframework.stereotype.Component;
 
 import com.security.demo.entity.Cliente;
-import com.security.demo.entity.Endereco;
-import com.security.demo.entity.request.ClienteRequest;
 import com.security.demo.entity.response.ClienteResponse;
 import com.security.demo.map.Map;
 import com.security.demo.securityException.EntidadeVaziaException;

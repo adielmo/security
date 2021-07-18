@@ -1,7 +1,6 @@
 package com.security.demo.service.cliente;
 
 import java.util.List;
-import java.util.Optional;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -15,7 +14,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import com.security.demo.entity.Cliente;
-import com.security.demo.entity.Endereco;
 import com.security.demo.entity.request.ClienteRequest;
 import com.security.demo.entity.response.ClienteResponse;
 import com.security.demo.map.Map;
@@ -23,7 +21,6 @@ import com.security.demo.repository.ClienteRepository;
 import com.security.demo.securityException.CpfJaCadastradoException;
 import com.security.demo.securityException.EmailJaCadastradoEncotradaException;
 import com.security.demo.securityException.EntidadeNaoEncotradaException;
-import com.security.demo.securityException.EntidadeVaziaException;
 import com.security.demo.util.page.ClientePageable;
 
 @Service
@@ -35,7 +32,7 @@ public class ClienteServiceImpl implements ClienteService {
 	private ClienteRepository clienteRep;
 
 	@Autowired
-	private Map<Cliente, ClienteResponse> responseMap;
+	private Map<Cliente, ClienteResponse> responseClientMap;
 
 	@Autowired
 	private Map<ClienteRequest, Cliente> clienteMap;
@@ -50,7 +47,7 @@ public class ClienteServiceImpl implements ClienteService {
 		isCpfValide(cliente.getCpf());
 
 		return clienteRep.saveAndFlush(cliente)
-				.map(client -> responseMap.converter(client));
+				.map(client -> responseClientMap.converter(client));
 	}
 
 	
@@ -68,7 +65,7 @@ public class ClienteServiceImpl implements ClienteService {
 		Sort sort = Sort.by(clietPage.getSortDirection(), clietPage.getSortBy());
 		Pageable pageable = PageRequest.of(clietPage.getPageNumber(), clietPage.getSizePage(), sort);
 
-		return clienteRep.findAll(pageable).map(cliente -> this.responseMap.converter(cliente));
+		return clienteRep.findAll(pageable).map(cliente -> this.responseClientMap.converter(cliente));
 	}
 
 	@Transactional
@@ -80,7 +77,7 @@ public class ClienteServiceImpl implements ClienteService {
 		Cliente cliente = getClienteId(id);
 		Cliente updateCliente = mergeCliente(clienteRequest, cliente);
 		
-		return clienteRep.saveAndFlush(updateCliente).map(prodUpd -> this.responseMap.converter(updateCliente));
+		return clienteRep.saveAndFlush(updateCliente).map(prodUpd -> this.responseClientMap.converter(updateCliente));
 	}
 
 	@Transactional
@@ -101,7 +98,7 @@ public class ClienteServiceImpl implements ClienteService {
 	public ClienteResponse buscarUmCliente(Long id) {
 		LOGGER.info("Buscando um registro tipo Cliente pelo Id");
 
-		return clienteRep.findById(id).map(cliente -> this.responseMap.converter(cliente)).orElseThrow(
+		return clienteRep.findById(id).map(cliente -> this.responseClientMap.converter(cliente)).orElseThrow(
 				() -> new EntidadeNaoEncotradaException(String.format("Cliente não encontrado, com Id %d !", id)));
 	}
 
@@ -110,7 +107,7 @@ public class ClienteServiceImpl implements ClienteService {
 		LOGGER.info("Buscando um registro tipo Cliente pelo Nome");
 
 		return clienteRep.findByNomeContaining(nome.strip()).stream().findFirst()
-				.map(x -> this.responseMap.converter(x)).orElseThrow(() -> new EntidadeNaoEncotradaException(
+				.map(x -> this.responseClientMap.converter(x)).orElseThrow(() -> new EntidadeNaoEncotradaException(
 						String.format("Cliente não encontrado, com Nome %s !", nome)));
 	}
 

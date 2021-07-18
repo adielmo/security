@@ -1,9 +1,5 @@
 package com.security.demo.entity.request;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.PositiveOrZero;
-
 public class ProdutoRequest {
 	
 	//@NotBlank
